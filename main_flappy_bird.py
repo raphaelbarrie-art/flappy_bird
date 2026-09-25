@@ -21,7 +21,7 @@ while en_jeu:
     groupe_sprite.update()
     if gg.rect.x<0:
         obstacle=random.randint(0,50)
-    print(obstacle)
+   
     if obstacle==14:
         gg.update(True)
     ecran.fill((0, 0, 0))
@@ -29,7 +29,7 @@ while en_jeu:
     groupe_sprite.draw(ecran)
     ecran.blit(gg.image, gg.rect)
     if obstacle==14  or gg.rect.x>0:
-       print(obstacle)
+      v_sert_a_rien=2
     else:
         gg.verif=True
     pygame.display.flip()

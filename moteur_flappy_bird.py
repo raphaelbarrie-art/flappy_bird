@@ -27,7 +27,8 @@ class Obstacle(pygame.sprite.Sprite):
         self.rect.x-=8
         if visible and self.verif:
             self.rect.x=600
-            coordonnees_y=random.randint(200, 600)
+            coordonnees_y=random.randint(160, 440)
+            print(coordonnees_y)
             self.rect.y=coordonnees_y
             self.verif=False
         
