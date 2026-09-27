@@ -9,7 +9,7 @@ horloge=pygame.time.Clock()
 obstacle=0
 score=0
 vitesse=8
-
+lose=False
 font=pygame.font.SysFont("Arial", 25, bold=True)
 en_jeu=True
 liste_position_tuyeau=[(800, 600), (600, 600), (400, 600), (200, 600), (0, 600), (800, 0), (600, 0), (400, 0), (200, 0), (0, 0)]
@@ -18,6 +18,8 @@ for i in range(10):
     groupe_sprite.add(Tuyeau(liste_position_tuyeau[i]))
 ennemi=Obstacle()
 personnage=Bird()
+text_end=font.render("Game OVER appuyer sur r pour restart", False, (255, 0, 0))
+rect_text_end=text_end.get_rect(center=(-30,-50))
 while en_jeu:
     test_score=score/500
     if test_score==1:
@@ -33,6 +35,14 @@ while en_jeu:
     for event in evenement:
         if event.type==pygame.QUIT:
             en_jeu=False
+        if event.type==pygame.KEYDOWN:
+            if event.key==pygame.K_r:
+                score=0
+                lose=False
+                vitesse=8
+                obstacle=0
+                personnage.reset()
+                ennemi.reset()
     text=font.render(f"score:{score} ", True, (255, 255, 255))
     rect_text=text.get_rect(topleft=(0, 0))
     
@@ -51,12 +61,16 @@ while en_jeu:
         if ennemi.rect.x<=0:
             ennemi.rect.x-=10
     liste_touche=pygame.sprite.spritecollide(personnage, groupe_sprite, False)
-    personnage.update(liste_touche, evenement )
+    personnage.update(liste_touche, evenement, sys.modules[__name__])
     ecran.fill((0, 0, 0))
-    groupe_sprite.draw(ecran)
-    ecran.blit(ennemi.image, ennemi.rect)
-    ecran.blit(personnage.image, personnage.rect)
-    ecran.blit(text, rect_text)
+    if lose==False:    
+        groupe_sprite.draw(ecran)
+        ecran.blit(ennemi.image, ennemi.rect)
+        ecran.blit(personnage.image, personnage.rect)
+        ecran.blit(text, rect_text)
+    elif lose:
+        ecran.blit(text_end, rect_text_end)
+        
     if obstacle==14  or ennemi.rect.x>0:
       v_sert_a_rien=2
     else:

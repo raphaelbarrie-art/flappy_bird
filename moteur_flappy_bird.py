@@ -1,5 +1,6 @@
 import pygame
 import random
+from defaite_flappy_bird import Defaite
 class Tuyeau(pygame.sprite.Sprite):
     def __init__(self, couple):
         super().__init__()
@@ -17,15 +18,21 @@ class Bird:
         self.image=pygame.Surface((40, 40))
         self.image.fill((0, 0, 255))
         
-        self.rect=self.image.get_rect(center=(400, 300))
-    def update(self, liste_touche, events):
+        self.rect=self.image.get_rect(center=(400, 200))
+    def update(self, liste_touche, events, module):
         self.rect.y+=8
         if liste_touche:
             self.rect.x=-100
+            Defaite.defaite(module)
         for event in events:
             if event.type==pygame.KEYDOWN:
                 if event.key==pygame.K_SPACE:
                     self.rect.y-=70
+    def reset(self):
+        self.rect.x=400
+        self.rect.y=200
+        
+    def defaite(self)
 class Obstacle(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -33,7 +40,7 @@ class Obstacle(pygame.sprite.Sprite):
         self.image=pygame.Surface((20, 10))
         self.image.fill((255, 0, 0))
         
-        self.rect=self.image.get_rect(center=(0, 0))
+        self.rect=self.image.get_rect(center=(-10, 0))
     def update(self, visible=False, vitesse=8):
         self.rect.x-=vitesse
         if  self.rect.x<=0:
@@ -43,4 +50,6 @@ class Obstacle(pygame.sprite.Sprite):
             coordonnees_y=random.randint(160, 440)  
             self.rect.y=coordonnees_y
             self.verif=False
+    def reset(self):
+        self.rect.x=-900
         
