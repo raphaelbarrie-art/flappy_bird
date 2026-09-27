@@ -14,14 +14,18 @@ class Tuyeau(pygame.sprite.Sprite):
             self.rect.x=800
 class Bird:
     def __init__(self):
-        self.image=pygame.Surface((60, 60))
+        self.image=pygame.Surface((40, 40))
         self.image.fill((0, 0, 255))
         
         self.rect=self.image.get_rect(center=(400, 300))
-    def update(self, liste_touche):
+    def update(self, liste_touche, events):
         self.rect.y+=8
         if liste_touche:
             self.rect.x=-100
+        for event in events:
+            if event.type==pygame.KEYDOWN:
+                if event.key==pygame.K_SPACE:
+                    self.rect.y-=70
 class Obstacle(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -30,12 +34,12 @@ class Obstacle(pygame.sprite.Sprite):
         self.image.fill((255, 0, 0))
         
         self.rect=self.image.get_rect(center=(0, 0))
-    def update(self, visible=False):
-        self.rect.x-=8
+    def update(self, visible=False, vitesse=8):
+        self.rect.x-=vitesse
         if  self.rect.x<=0:
             self.rect.x-=10
         if visible and self.verif:
-            self.rect.x=600
+            self.rect.x=800
             coordonnees_y=random.randint(160, 440)  
             self.rect.y=coordonnees_y
             self.verif=False
