@@ -61,6 +61,8 @@ while en_jeu:
         if ennemi.rect.x<=0:
             ennemi.rect.x-=10
     liste_touche=pygame.sprite.spritecollide(personnage, groupe_sprite, False)
+    if pygame.sprite.collide_rect(personnage, ennemi):
+        personnage.défaite(sys.modules[__name__])
     personnage.update(liste_touche, evenement, sys.modules[__name__])
     ecran.fill((0, 0, 0))
     if lose==False:    
@@ -79,4 +81,4 @@ while en_jeu:
     
     horloge.tick(30)
 pygame.quit()
-sys.exit()
+sys.exit() 

@@ -31,8 +31,10 @@ class Bird:
     def reset(self):
         self.rect.x=400
         self.rect.y=200
+    def défaite(self, module):
+        Defaite.defaite(module)
         
-    def defaite(self)
+
 class Obstacle(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
